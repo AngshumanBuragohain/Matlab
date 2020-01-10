@@ -1,7 +1,7 @@
 function [v1, v2, delE, DE]=Colfunc(m1, m2, e, u1, u2, x1 , x2)
     
     % Normal vector initialisation
-    n=(x1-x2)/norm(x1-x2);
+    n=(x1-x2)/abs(x1-x2);
     
     %Relative initial velocity
     u12=u1-u2;
@@ -11,8 +11,8 @@ function [v1, v2, delE, DE]=Colfunc(m1, m2, e, u1, u2, x1 , x2)
     
     %Reduced mass
     ma=(m1*m2)/(m1+m2);
-  
-    J= -n.*(1+e)*dot(u12,n)*ma;
+    
+    J= -(1+e).*dotprod(u12,n)*ma*n;
     
     %Computed final velocities
     v1=u1 + J/m1;
@@ -26,5 +26,4 @@ function [v1, v2, delE, DE]=Colfunc(m1, m2, e, u1, u2, x1 , x2)
     
     %Kinetic Energy dissipation
     DE=abs(KEi-KEf)/KEi;
-    
 end
